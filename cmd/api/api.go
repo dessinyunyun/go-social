@@ -57,6 +57,18 @@ func (app *application) mount() http.Handler {
 
 		})
 
+		r.Route("/users", func(r chi.Router) {
+			// r.Post("/", app.createPostHandler)
+
+			r.Route("/{userId}", func(r chi.Router) {
+				// r.Use(app.postsContextMiddleware)
+
+				r.Get("/", app.getUserHandler)
+
+			})
+
+		})
+
 	})
 
 	return r

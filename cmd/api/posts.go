@@ -38,7 +38,7 @@ func (app *application) createPostHandler(w http.ResponseWriter, r *http.Request
 	post := &repository.Post{
 		Title:   payload.Title,
 		Content: payload.Content,
-		UserID:  int64(userId),
+		UserId:  int64(userId),
 		Tags:    payload.Tags,
 	}
 
@@ -76,7 +76,7 @@ func (app *application) getPostHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	comments, err := app.repository.Comments.GetByPostID(ctx, id)
+	comments, err := app.repository.Comments.GetByPostId(ctx, id)
 	if err != nil {
 		app.internalServerError(w, r, err)
 		return

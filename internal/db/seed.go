@@ -127,7 +127,7 @@ func generatePosts(num int, users []*repository.User) []*repository.Post {
 		user := users[rand.Intn(len(users))]
 
 		posts[i] = &repository.Post{
-			UserID:  user.ID,
+			UserId:  user.ID,
 			Title:   titles[rand.Intn(len(titles))],
 			Content: contents[rand.Intn(len(contents))],
 			Tags: []string{
@@ -145,8 +145,8 @@ func generateComments(num int, users []*repository.User, posts []*repository.Pos
 
 	for i := 0; i < num; i++ {
 		cms[i] = &repository.Comment{
-			PostID:  posts[rand.Intn(len(posts))].ID,
-			UserID:  users[rand.Intn(len(users))].ID,
+			PostId:  posts[rand.Intn(len(posts))].ID,
+			UserId:  users[rand.Intn(len(users))].ID,
 			Content: comments[rand.Intn(len(comments))],
 		}
 	}

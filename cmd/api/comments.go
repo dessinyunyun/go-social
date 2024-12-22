@@ -7,8 +7,8 @@ import (
 )
 
 type createCommentPayload struct {
-	PostID  int64  `json:"post_id"`
-	UserID  int64  `json:"user_id"`
+	PostId  int64  `json:"post_id"`
+	UserId  int64  `json:"user_id"`
 	Content string `json:"content"`
 }
 
@@ -25,8 +25,8 @@ func (app *application) createCommentHandler(w http.ResponseWriter, r *http.Requ
 	}
 
 	comment := &repository.Comment{
-		PostID:  int64(payload.PostID),
-		UserID:  int64(payload.UserID),
+		PostId:  int64(payload.PostId),
+		UserId:  int64(payload.UserId),
 		Content: payload.Content,
 	}
 

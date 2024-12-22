@@ -42,3 +42,29 @@ func (s *UserRepository) Create(ctx context.Context, user *User) error {
 	}
 	return nil
 }
+
+func (s *UserRepository) GetUser(ctx context.Context, userId int64) (*User, error) {
+
+	query := `
+	SELECT id, username, email, created_at
+	FROM users
+	WHERE id = $1
+	`
+
+	ctx, cancel := context.WithTimeout(ctx, QueryTimeoutDuration)
+	defer cancel()
+	user := &User{}
+	err := s.db.QueryRowContext(ctx, query, userId).Scan(&user.ID, &user.Username, &user.Email, &user.CreatedAt)
+
+	if err != nil {
+		switch err {
+		case sql.ErrNoRows:
+			return nil, ErrNotFound
+		default:
+			return nil, err
+		}
+	}
+
+	return user, nil
+
+}

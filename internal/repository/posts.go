@@ -12,7 +12,7 @@ type Post struct {
 	ID        int64     `json:"id"`
 	Content   string    `json:"content"`
 	Title     string    `json:"title"`
-	UserID    int64     `json:"user_id"`
+	UserId    int64     `json:"user_id"`
 	Tags      []string  `json:"tags"`
 	CreatedAt string    `json:"created_at"`
 	UpdatedAt string    `json:"updated_at"`
@@ -38,7 +38,7 @@ func (s *PostRepository) Create(ctx context.Context, post *Post) error {
 		query,
 		post.Content,
 		post.Title,
-		post.UserID,
+		post.UserId,
 		pq.Array(post.Tags),
 	).Scan(
 		&post.ID,
@@ -52,7 +52,7 @@ func (s *PostRepository) Create(ctx context.Context, post *Post) error {
 	return nil
 }
 
-func (s *PostRepository) GetPost(ctx context.Context, id int64) (*Post, error) {
+func (s *PostRepository) GetPost(ctx context.Context, postId int64) (*Post, error) {
 	query := `
 	SELECT id, user_id, title, content, created_at, updated_at, tags, version
 	FROM posts
@@ -63,9 +63,9 @@ func (s *PostRepository) GetPost(ctx context.Context, id int64) (*Post, error) {
 	defer cancel()
 
 	var post Post
-	err := s.db.QueryRowContext(ctx, query, id).Scan(
+	err := s.db.QueryRowContext(ctx, query, postId).Scan(
 		&post.ID,
-		&post.UserID,
+		&post.UserId,
 		&post.Title,
 		&post.Content,
 		&post.CreatedAt,
