@@ -154,7 +154,6 @@ func (app *application) updatePostHandler(w http.ResponseWriter, r *http.Request
 func (app *application) postsContextMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		idParam := chi.URLParam(r, "postId")
-		fmt.Println("testesttttt", idParam)
 		id, err := strconv.ParseInt(idParam, 10, 64)
 		if err != nil {
 			app.internalServerError(w, r, err)
